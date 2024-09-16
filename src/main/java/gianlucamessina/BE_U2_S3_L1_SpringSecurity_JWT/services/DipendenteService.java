@@ -45,7 +45,7 @@ public class DipendenteService {
             throw new BadRequestException("L'username: "+body.username()+" è già in uso!");
         });
 
-        Dipendente dipendente=new Dipendente(body.username(), body.nome(), body.cognome(),body.email(),
+        Dipendente dipendente=new Dipendente(body.username(), body.nome(), body.cognome(),body.email(), body.password(),
                 "https://ui-avatars.com/api/?name="+body.nome()+"+"+body.cognome() );
 
         return this.dipendentiRepository.save(dipendente);
@@ -91,5 +91,9 @@ public class DipendenteService {
         found.setFotoProfilo(url);
 
         return this.dipendentiRepository.save(found);
+    }
+
+    public Dipendente findByEmail(String email){
+        return this.dipendentiRepository.findByEmail(email).orElseThrow(()->new NotFoundException("L'utente con email: "+ email+" non è stato trovato!"));
     }
 }

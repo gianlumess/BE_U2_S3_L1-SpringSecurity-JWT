@@ -20,14 +20,16 @@ public class Dipendente {
     private String nome;
     private String cognome;
     private String email;
+    private String password;
     @Column(name = "foto_profilo")
     private String fotoProfilo;
 
-    public Dipendente(String username, String nome, String cognome, String email, String fotoProfilo) {
+    public Dipendente(String username, String nome, String cognome, String email,String password, String fotoProfilo) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.password=password;
         this.fotoProfilo = fotoProfilo;
     }
 }
