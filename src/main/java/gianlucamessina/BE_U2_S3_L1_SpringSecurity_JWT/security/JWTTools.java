@@ -1,6 +1,7 @@
 package gianlucamessina.BE_U2_S3_L1_SpringSecurity_JWT.security;
 
 import gianlucamessina.BE_U2_S3_L1_SpringSecurity_JWT.entities.Dipendente;
+import gianlucamessina.BE_U2_S3_L1_SpringSecurity_JWT.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,5 +23,14 @@ public class JWTTools {
                 .compact();
     }
 
-    public void verifyToken(String token){}
+    public void verifyToken(String token){
+        //devo verificare che il token non sia stato manipolato o scaduto
+
+        try {
+            (Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build()).parse(token);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            throw new UnauthorizedException("Problemi col token, effettua nuovamente il login");
+        }
+    }
 }
